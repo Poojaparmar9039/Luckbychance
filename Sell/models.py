@@ -28,6 +28,7 @@ class Location(models.Model):
     country = models.CharField(max_length=100,default='India')
     state = models.CharField(max_length=100,default='Indore')
     city = models.CharField(max_length=100,default='Indore')
+    area = models.CharField(max_length=100, blank=True, null=True)
 
     def __str__(self):
         return f"{self.city}, {self.state}, {self.country}"

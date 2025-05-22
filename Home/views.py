@@ -1,14 +1,39 @@
 from django.shortcuts import render
-from .models import Country
-from Sell.models import Category
+from Sell.models import Category,Ad
+from django.shortcuts import render
+
+
+
+
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+
+from django.shortcuts import render
+from Sell.models import Category, Ad, AdImage
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
 def home(request):
-    countries = Country.objects.all()
+    # Get active products with their first image
+    product_list = Ad.objects.filter(status='active') \
+                   .order_by('-created_at') \
+                   .prefetch_related('images')
+    
+    paginator = Paginator(product_list, 12)
+    page = request.GET.get('page')
+    
+    try:
+        products = paginator.page(page)
+    except PageNotAnInteger:
+        products = paginator.page(1)
+    except EmptyPage:
+        products = paginator.page(paginator.num_pages)
+    
     categories = Category.objects.all()
-    return render(request, 'Home.html', {'countries': countries,'categories': categories})
+    
+    return render(request, 'Home.html', {
+        'categories': categories,
+        'products': products
+    })
 
 
-
-
-def ad_deatil(request):
-    return render(request, 'ad_detail.html')
+def ad_detail(request, slug):
+    return render(request, 'ad_detail.html', {'slug': slug})

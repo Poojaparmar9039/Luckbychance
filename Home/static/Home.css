@@ -422,6 +422,12 @@
   text-transform: uppercase;
   letter-spacing: 2px;
 }
+.elementary-class-body .featured-products  a{
+  text-decoration: none;
+  color: var(--color-secondary);
+  font-weight: 600;
+  transition: color 0.3s ease;
+}
 
 .elementary-class-body .products-grid {
   display: grid;
@@ -443,6 +449,10 @@
   position: relative;
   overflow: hidden;
   transform: translateY(0);
+}
+.elementary-class-body .featured-products .product h4{
+  margin-top: 1rem ;
+  color: green;
 }
 
 
@@ -501,6 +511,29 @@
   transition: width 0.3s ease;
 }
 
+/* Pagination styling */
+.pagination {
+  margin: 20px 0;
+  text-align: center;
+}
+
+.pagination a {
+  color: #333;
+  padding: 8px 16px;
+  text-decoration: none;
+  border: 1px solid #ddd;
+  margin: 0 4px;
+}
+
+.pagination a.active {
+  background-color: #4CAF50;
+  color: white;
+  border: 1px solid #4CAF50;
+}
+
+.pagination a:hover:not(.active) {
+  background-color: #ddd;
+}
 .elementary-class-body .product:hover p::after {
   width: 50px;
 }

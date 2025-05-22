@@ -12,10 +12,29 @@
     <img id="logo" src="{% static 'photo/unnamed.png' %}" alt="">
     <h2>Post Your Ad</h2>
     <p>LUCK By Chance....</p>
-  <form method="post" enctype="multipart/form-data" id="ad-form" data-subcat-url="{% url 'load_subcategories' %}">
+    
+  <form method="post"  enctype="multipart/form-data" id="ad-form" data-subcat-url="{% url 'load_subcategories' %}">
       {% csrf_token %}
       {{ form.non_field_errors }}
       {{ image_form.non_field_errors }}
+      <!-- Add this near the top of your form -->
+{% if form.errors or image_form.errors %}
+<div class="form-errors">
+    <ul>
+        {% for field in form %}
+            {% for error in field.errors %}
+                <li>{{ field.label }}: {{ error }}</li>
+            {% endfor %}
+        {% endfor %}
+        {% for error in form.non_field_errors %}
+            <li>{{ error }}</li>
+        {% endfor %}
+        {% for error in image_form.errors %}
+            <li>{{ error }}</li>
+        {% endfor %}
+    </ul>
+</div>
+{% endif %}
 
       <div class="form-group">
         <label for="id_title">Title*</label>
@@ -62,6 +81,8 @@
         {{ form.location }}
         {{ form.location.errors }}
       </div>
+      
+
 
       <div class="form-group">
         <label for="id_contact_phone">Phone Number*</label>
@@ -83,7 +104,9 @@
 
       <div class="form-group">
         <label for="id_images">Upload Images (max 6)</label>
-        {{ image_form.images }}
+        <input type="file" name="images" id="id_images" multiple accept="image/*" class="file-upload" />
+
+        <!-- {{ image_form.images }} -->
         <div id="file-list"></div>
         {{ image_form.images.errors }}
         <small>Accepted formats: JPG, PNG, GIF. Max 5MB per image.</small>

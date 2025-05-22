@@ -9,11 +9,14 @@
 </head>
 <body>
     <div class="elementary-class-body">
+      <!-- Add this at the top of your template -->
         <header>
             <div class="header-section">
                 <nav>
                     <ul>
                         <li><a href="#" class="logo"><img src="{% static 'media/unnamed.jpg' %}" alt=""></a></li>
+            
+
                         <!-- DROPDOWN FOR LOCATION -->
                         <li class="dropdown">
                             <button class="dropdown-btn">📍 Location</button>
@@ -75,6 +78,7 @@
                             </div>
                         </div>
                         {% endfor %}
+                    
                     </div>     
                 </section>
 
@@ -82,35 +86,48 @@
                 <section class="featured-products">
           
                     <div class="products-grid">
-                        <a href="{% url 'ad_detail' %}">
-                          <div class="product">
-                            <img src="https://5.imimg.com/data5/ANDROID/Default/2023/7/326598386/TM/JD/NK/189033354/product-jpeg-500x500.jpg" alt="Product 1">
-                            <h3>Product 1</h3>
-                            <!-- <p>motorola edge 60 pro</p> -->
-                            <p>$19.99</p>
-                        </div>
-                        </a>
-
-
+                    {% for p in products %}
+                      <a href="{% url 'ad_detail' slug=p.slug %}" class="product-link">
                         <div class="product">
-                          <img src="https://sportsmatik.com/uploads/sports-corner/equipment-bn.jpg" alt="Product 1">
-                            <h3>Product 2</h3>
-                            <p>$29.99</p>
+                          {% with p.images.all|first as first_image %}
+                            {% if first_image %}
+                              <img src="{{ first_image.image.url }}" alt="{{ p.title }}" loading="lazy">
+                            {% else %}
+                              <img src="{% static 'media/default-product.png' %}" alt="No image available">
+                            {% endif %}
+                          {% endwith %}
+                          <h3>{{ p.title }}</h3>
+                          <p>{{ p.description|truncatechars:100 }}</p>
+                          <h4>Rs {{ p.price }}</h4>
                         </div>
-                        <div class="product">
-                          <img src="https://www.nerolac.com/sites/default/files/2023-03/play-mix-and-match-with-home-decor-items.webp" alt="Product 1">
-                            <h3>Product 3</h3>
-                            <p>$39.99</p>
-                        </div>
-                        <div class="product">
-                           <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQaCQV4d8fooSjlegeVxxizomRx1E-TuABpsg&s" alt="Product 1">
-                            <h3>Product 4</h3>
-                            <p>$49.99</p>
-                        </div>
+                      </a>
+                    {% empty %}
+                      <div class="no-products">
+                        <p>No products available at the moment.</p>
+                      </div>
+                    {% endfor %}           
                     </div>
                 </section>
-
             </section>
+
+            <!-- Pagination controls -->
+                  <div class="pagination">
+                    <span class="step-links">
+                      {% if products.has_previous %}
+                        <a href="?page=1">&laquo; first</a>
+                        <a href="?page={{ products.previous_page_number }}">previous</a>
+                      {% endif %}
+                    
+                      <span class="current">
+                        Page {{ products.number }} of {{ products.paginator.num_pages }}
+                      </span>
+                    
+                      {% if products.has_next %}
+                        <a href="?page={{ products.next_page_number }}">next</a>
+                        <a href="?page={{ products.paginator.num_pages }}">last &raquo;</a>
+                      {% endif %}
+                    </span>
+                  </div>
 
         </div>
         {% endblock %}
