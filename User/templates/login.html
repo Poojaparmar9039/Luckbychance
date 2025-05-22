@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Login</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: "Segoe UI", sans-serif;
+    }
+
+    body {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      /* background: linear-gradient(135deg, #042a1f57 0%, #042a1f71 50%, #042a1fbb 100%); */
+      padding: 20px;
+    }
+
+    .login-signup {
+      background: #fff;
+      padding: 2rem;
+      border-radius: 16px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+      width: 100%;
+      max-width: 400px;
+    }
+
+    .login-signup #form-title {
+      text-align: center;
+      font-size: 1.5rem;
+      font-weight: bold;
+      margin-bottom: 1.5rem;
+      color: #1f2937;
+    }
+
+    .login-signup .form-group {
+      margin-bottom: 1rem;
+    }
+
+    .login-signup .form-group label {
+      display: block;
+      margin-bottom: 0.5rem;
+      color: #000000;
+    }
+    #login-form .forgot-btn{
+      display: block;
+  
+      margin-top: 0.5rem;
+      color: #4f46e5;
+      text-decoration: none;
+      font-size: 0.9rem;
+    }
+
+    .login-signup .form-group input {
+      width: 100%;
+      padding: 0.75rem;
+      border: 1px solid #d1d5db;
+      border-radius: 8px;
+      font-size: 1rem;
+    }
+
+    .login-signup .btn {
+      width: 100%;
+      padding: 0.75rem;
+      background-color: #042a1fd0;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: background 0.3s ease;
+    }
+
+    .login-signup .btn:hover {
+      background-color: #042a1f;
+    }
+    .toggle-text {
+      text-align: center;
+      margin-top: 1rem;
+      font-size: 0.9rem;
+    }
+    /* Alert base styles */
+.alert {
+  padding: 0.75rem 1rem;
+  margin-bottom: 1rem;
+  border-radius: 8px;
+  font-size: 0.9rem;
+  display: flex;
+  align-items: center;
+  
+}
+
+
+.alert-error {
+  color: #b91c1c;
+}
+
+
+.alert-message {
+  color: #065f46;
+}
+
+
+
+    .login-signup .toggle-text a {
+      color: #4f46e5;
+      cursor: pointer;
+      text-decoration: none;
+    }
+
+    @media (max-width: 500px) {
+      .login-signup {
+        padding: 1.5rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="login-signup">
+    <div id="form-title">Login</div>
+    
+ 
+ 
+
+    <form id="login-form" action="{% url 'login' %}" method="post">
+      {% csrf_token %}
+              {% if error %}
+                <div class="alert alert-error">
+                    {{ error }}
+                </div>
+              {% else %}
+              <div class="alert alert-message">
+                {{ message }}
+              </div>
+              {% endif %}
+
+      <div class="form-group">
+        <label for="email-input">Enter your Email</label>
+        <input type="email" id="email-input" name="email" required placeholder="Enter your email" />
+      </div>
+
+      <div class="form-group">
+        <label for="password-input">Password</label>
+        <input type="password" id="password-input" name="password" required placeholder="Enter your password" />
+      </div>
+
+      <button type="submit" class="btn">Login</button>
+      <a class="forgot-btn" href="{% url  'forgot_password' %}">Forgot Password ?</a>
+    </form>
+     <div class="toggle-text">
+      <span id="toggle-message">Don't have an account?</span>
+      <a href="{% url 'sign' %}" id="toggle-link">Sign Up</a>
+    </div>
+  </div>
+</body>
+</html>
+

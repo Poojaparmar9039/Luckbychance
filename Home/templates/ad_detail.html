@@ -1,0 +1,34 @@
+{% extends 'Home.html' %}
+{% load static %}
+
+{% block title %}<title>Ad Detail</title>{% endblock %}
+
+{% block content %}
+<link rel="stylesheet" href="{% static 'ad_detail.css' %}">
+
+<div class="ad-detail-container">
+   <div class="ad-card">
+    <div class="ad-detail-image">
+        <img src="{% static 'media/unnamed.jpg' %}" alt="Image">
+    </div>
+     <div class="ad-content">
+        <div class="ad-detail-header">
+        <h1>Motorola Edge 60</h1>
+        <p class="ad-price">Price: $ 599</p>
+    </div>
+    <div class="ad-detail-description">
+        <h2>Description</h2>
+        <p>Lorem, ipsum dolor sit necessitatibus. Corrupti veritatis incidunt distinctio?</p>
+    </div>
+
+    <div class="ad-detail-contact">
+        <h2>Contact Information</h2>
+        <p>Seller: Tom Cruise</p>
+        <p>Email: unknown@gmail.com</p>
+    </div>
+     </div>
+   </div>
+
+</div>
+{% endblock %}
+{% block footer %}{% endblock %}

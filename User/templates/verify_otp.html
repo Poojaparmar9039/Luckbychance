@@ -1,0 +1,35 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'verify_otp.css' %}">
+    <title>Document</title>
+   
+</head>
+
+<body>
+    <!-- reset_password.html -->
+   
+    <div class="otp-verification">
+        <form method="POST"  action="{% url 'verify_otp' %}">
+             {% csrf_token %}
+              {% if error %}
+                <div class="alert alert-error">
+                    {{ error }}
+                </div>
+              {% else %}
+              <div class="alert alert-message">
+                {{ message }}
+              </div>
+              {% endif %}
+             <input type="text" name="otp" placeholder="Enter OTP" required><br>
+             <button type="submit">Reset Password</button>
+        </form>
+    </div>
+
+   
+
+</body>
+</html>

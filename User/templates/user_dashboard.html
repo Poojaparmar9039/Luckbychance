@@ -1,0 +1,89 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OLX Dashboard</title>
+    <link rel="stylesheet" href="{% static 'user_dashboard.css' %}">
+</head>
+<body>
+    <div class="container">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="brand">
+                <h1>Luck By Chance</h1>
+                <p>Your Dashboard</p>
+            </div>
+            <div class="user-info">
+                <p><strong>pooja</strong></p>
+                <p class="role">Seller</p>
+            </div>
+            <nav>
+                <ul>
+                    <li><a href="" class="active">Dashboard</a></li>
+                    <li><a href="">My Ads</a></li>
+                    <li><a href="">Post Ad</a></li>
+                    <li><a href="">Orders</a></li>
+                </ul>
+            </nav>
+            <div class="logout">
+                <a href="">Logout</a>
+            </div>
+        </aside>
+
+        <!-- Main content -->
+        <main class="main-content">
+            <header class="header">
+                <div>
+                    <!-- <h2>Welcome, {{ user.fullname }}</h2> -->
+                    <p>Manage your ads and activities</p>
+                </div>
+                <form class="search-form">
+                    <input type="text" placeholder="Search ads...">
+                    <button type="submit">Search</button>
+                </form>
+            </header>
+
+            <!-- {% if user.status == 'Active' %}
+            <section class="stats">
+                <div class="stat-box">
+                    <h3>Total Ads</h3>
+                    <p>5</p>
+                </div>
+                <div class="stat-box">
+                    <h3>Pending</h3>
+                    <p>2</p>
+                </div>
+                <div class="stat-box">
+                    <h3>Sold</h3>
+                    <p>3</p>
+                </div>
+                <div class="stat-box">
+                    <h3>Favorites</h3>
+                    <p>7</p>
+                </div>
+            </section>
+
+            <section class="ads-section">
+                <h3>My Latest Ads</h3>
+                <div class="ad-card">
+                    <img src="https://via.placeholder.com/250" alt="Ad Image">
+                    <div class="ad-details">
+                        <h4>iPhone 13 Pro</h4>
+                        <p>Condition: Like New | Price: ₹75,000</p>
+                        <p>Location: Delhi</p>
+                        <a href="{% url 'ad_detail' 1 %}" class="btn">View Ad</a>
+                    </div>
+                </div>
+            </section>
+            {% else %}
+            <div class="no-data">
+                <p>You have not posted any ads yet.</p>
+                <a href="{% url 'post_ad' %}" class="btn">Post Your First Ad</a>
+            </div>
+            {% endif %} -->
+        </main>
+    </div>
+</body>
+</html>

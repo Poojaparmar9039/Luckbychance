@@ -1,0 +1,145 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: "Segoe UI", sans-serif;
+    }
+
+    body {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      /* background: linear-gradient(135deg, #042a1f57 0%, #042a1f71 50%,#042a1fbb 100%); */
+      padding: 20px;
+    }
+
+    .login-signup {
+      background: #fff;
+      padding: 2rem;
+      border-radius: 16px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+      width: 100%;
+      max-width: 400px;
+    }
+    .login-signup p{
+      color: red;
+      text-align: center;
+      font-size: 1rem;
+      margin-bottom: 1rem;
+    }
+
+    /* Targeting the form inside login-signup with ID 'form' */
+    .login-signup #form-title {
+      text-align: center;
+      font-size: 1.5rem;
+      font-weight: bold;
+      margin-bottom: 1.5rem;
+      color: #1f2937;
+    }
+
+    .login-signup #form .form-group {
+      margin-bottom: 1rem;
+    }
+
+    .login-signup #form .form-group label {
+      display: block;
+      margin-bottom: 0.5rem;
+      color: #000000;
+    }
+
+    .login-signup #form .form-group input {
+      width: 100%;
+      padding: 0.75rem;
+      border: 1px solid #d1d5db;
+      border-radius: 8px;
+      font-size: 1rem;
+    }
+
+    .login-signup #form .btn {
+      width: 100%;
+      padding: 0.75rem;
+      background-color:#042a1fd0;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: background 0.3s ease;
+    }
+
+   .login-signup #form .btn:hover {
+      background-color: #042a1f;
+    }
+
+    .toggle-text {
+      text-align: center;
+      margin-top: 1rem;
+      font-size: 0.9rem;
+    }
+
+    .login-signup .toggle-text a {
+      color: #4f46e5;
+      cursor: pointer;
+      text-decoration: none;
+    }
+
+   .login-signup .google-login {
+      margin-top: 1rem;
+      text-align: center;
+    }
+
+    @media (max-width: 500px) {
+      .login-signup {
+        padding: 1.5rem;
+      }
+    }
+    </style>
+</head>
+<body>
+  <div class="login-signup">
+    <div id="form-title" class="form-title">sign up </div>
+    {% if message %}
+    <p>{{ message }}</p>
+    {% endif %}
+    
+    <form id="form" action="{% url 'sign' %}" method="post">
+      {% csrf_token %}
+      <div id="username-field" class="form-group" >
+        <label for="username-input">Username</label>
+        <input type="text" id="username-input" name="fullname" required placeholder="Enter your username" />
+      </div>
+
+      <div class="form-group">
+        <label for="email-input">Email</label>
+        <input type="email" id="email-input" name="email" required placeholder="Enter your email" />
+      </div>
+
+      <div class="form-group">
+        <label for="password-input">Password</label>
+        <input type="password" id="password-input" name="password" required placeholder="Enter your password" />
+      </div>
+      
+      <div id="confirm-password-field" class="form-group" ">
+        <label for="confirm-password-input">Re-enter Password</label>
+        <input type="password" id="confirm-password-input" name="confirm" required placeholder="Re-enter Password" />
+      </div>
+
+      <button type="submit" class="btn">Submit</button>
+    </form>
+     <div class="toggle-text">
+      <span id="toggle-message">Already  have an account?</span>
+      <a href="{% url 'login' %}" id="toggle-link">login</a>
+    </div>
+    
+  </div>
+</body>
+</html>
