@@ -75,39 +75,13 @@ WSGI_APPLICATION = 'myapp.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.2/ref/settings/#databases
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'luckbychance',
-        'USER': 'root',
-        'PASSWORD': 'ADDNEO@9039571537',
-        'HOST': '127.0.0.1',   # or your database host/IP
-        'PORT': '3306',        # default MySQL port
-        'OPTIONS': {
-            'init_command': "SET sql_mode='STRICT_TRANS_TABLES'",
-        },
-    }
-}
+
 
 
 
 # Password validation
 # https://docs.djangoproject.com/en/5.2/ref/settings/#auth-password-validators
 
-AUTH_PASSWORD_VALIDATORS = [
-    {
-        'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
-    },
-    {
-        'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
-    },
-    {
-        'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
-    },
-    {
-        'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
-    },
-]
 
 
 # Internationalization
@@ -136,13 +110,5 @@ MEDIA_URL = '/media/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 
-
-
-EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-EMAIL_HOST = 'smtp.gmail.com'  # For Gmail
-EMAIL_PORT = 587  # For Gmail
-EMAIL_USE_TLS = True
-EMAIL_HOST_USER = 'poojaaddneo@gmail.com'  # Your email address
-EMAIL_HOST_PASSWORD = 'gkpw jjgh nrav rsal'  # Your email password or app password if using 2FA
 
 
