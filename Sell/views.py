@@ -5,8 +5,10 @@ from .models import Ad, AdImage, SubCategory, Category
 from django.core.exceptions import ObjectDoesNotExist
 
 # views.py
+from .models import Ad, AdImage, SubCategory, Category, Location
+
 def post_ad(request):
-    if not request.user.is_authenticated:  # Better way to check authentication
+    if not request.user.is_authenticated:
         return redirect('login')
 
     if request.method == 'POST':
@@ -14,12 +16,35 @@ def post_ad(request):
         image_form = MultipleImageUploadForm(request.POST, request.FILES)
 
         if form.is_valid():
-            # First save the ad without images
+            # ✅ Get location fields from POST
+            country = request.POST.get('country')
+            state = request.POST.get('state')
+            city = request.POST.get('city')
+            area = request.POST.get('area', '')
+
+            if not all([country, state, city]):
+                form.add_error(None, "Country, State, and City are required.")
+                return render(request, 'sellForm.html', {
+                    'form': form,
+                    'image_form': image_form,
+                    'categories': Category.objects.all()
+                })
+
+            # ✅ Create or get Location object
+            location, _ = Location.objects.get_or_create(
+                country=country.strip(),
+                state=state.strip(),
+                city=city.strip(),
+                defaults={'area': area.strip()}
+            )
+
+            # ✅ Save the ad
             ad = form.save(commit=False)
             ad.user = request.user
+            ad.location = location
             ad.save()
 
-            # Then handle images if form is valid
+            # ✅ Handle image uploads
             images = request.FILES.getlist('images')
             error_messages = []
 
@@ -27,7 +52,7 @@ def post_ad(request):
                 error_messages.append("You can upload a maximum of 6 images.")
             else:
                 for img in images:
-                    if img.size > 5 * 1024 * 1024:  # 5MB
+                    if img.size > 5 * 1024 * 1024:
                         error_messages.append(f"{img.name} is larger than 5MB.")
                         continue
                     if not img.content_type.startswith('image/'):
@@ -36,7 +61,6 @@ def post_ad(request):
                     AdImage.objects.create(ad=ad, image=img)
 
             if error_messages:
-                # If there are image errors, show them with the form
                 for msg in error_messages:
                     image_form.add_error('images', msg)
                 return render(request, 'sellForm.html', {
@@ -45,14 +69,14 @@ def post_ad(request):
                     'categories': Category.objects.all()
                 })
 
-            return redirect('ad_detail', slug=ad.slug)
-        else:
-            # Form is invalid, show errors
-            return render(request, 'sellForm.html', {
-                'form': form,
-                'image_form': image_form,
-                'categories': Category.objects.all()
-            })
+            return redirect('ad_detail', slug=ad.slug, id=ad.id)  # ✅ Correct
+
+
+        return render(request, 'sellForm.html', {
+            'form': form,
+            'image_form': image_form,
+            'categories': Category.objects.all()
+        })
 
     else:
         form = AdForm()
@@ -63,6 +87,7 @@ def post_ad(request):
         'image_form': image_form,
         'categories': Category.objects.all()
     })
+
 
 def load_subcategories(request):
     try:

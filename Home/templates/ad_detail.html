@@ -7,28 +7,52 @@
 <link rel="stylesheet" href="{% static 'ad_detail.css' %}">
 
 <div class="ad-detail-container">
-   <div class="ad-card">
-    <div class="ad-detail-image">
-        <img src="{% static 'media/unnamed.jpg' %}" alt="Image">
-    </div>
-     <div class="ad-content">
-        <div class="ad-detail-header">
-        <h1>Motorola Edge 60</h1>
-        <p class="ad-price">Price: $ 599</p>
-    </div>
-    <div class="ad-detail-description">
-        <h2>Description</h2>
-        <p>Lorem, ipsum dolor sit necessitatibus. Corrupti veritatis incidunt distinctio?</p>
-    </div>
+    {% if item %}
+        <div class="ad-card">
+            <div class="ad-detail-image">
+                {% with item.images.all|first as first_image %}
+                            {% if first_image %}
+                              <img src="{{ first_image.image.url }}" alt="{{ item.title }}" loading="lazy">
+                            {% else %}
+                              <img src="{% static 'media/default-product.png' %}" alt="No image available">
+                            {% endif %}
+                {% endwith %}
+            </div>
+             <div class="ad-content">
+                <div class="ad-detail-header">
+                <h1>{{ item.title }}</h1>
+                <p class="ad-price">Price: {{ item.price }}</p>
+            </div>
+            <div class="ad-detail-description">
+                <p>{{ item.description }}</p>
+            </div>
+            <div class="ad-detail-info">
+                <h2>Ad Information</h2>
+                <p>Category: {{ item.category.name }}</p>
+                <p>Subcategory: {{ item.subcategory.name }}</p>
+                <p>Posted on: {{ item.created_at|date:"Y-m-d H:i" }}</p>
+                {% if item.location %}
+                    <p>Location: {{ item.location.state }}</p>
+                {% else %}
+                    <p>Location: Not specified</p>
+                {% endif %}
+                            
+                <p>Condition: {{ item.condition }}</p>
+                <p>Contact: {{ item.contact_phone }}</p>
+            </div>
+            <div class="ad-detail-actions">
+                <button class="btn btn-primary">Contact Seller</button>
+                <button class="btn btn-secondary">Save Ad</button>
+            </div>
 
-    <div class="ad-detail-contact">
-        <h2>Contact Information</h2>
-        <p>Seller: Tom Cruise</p>
-        <p>Email: unknown@gmail.com</p>
+            <div class="ad-detail-contact">
+                <h2>Contact Information</h2>
+                <p>Seller: {{ item.seller_name }}</p>
+                <p>Email: {{ item.contact_email }}</p>
+            </div>
+        </div>
     </div>
-     </div>
-   </div>
-
+    {% endif %}
 </div>
 {% endblock %}
 {% block footer %}{% endblock %}

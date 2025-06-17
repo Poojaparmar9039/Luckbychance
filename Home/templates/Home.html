@@ -14,33 +14,42 @@
             <div class="header-section">
                 <nav>
                     <ul>
-                        <li><a href="#" class="logo"><img src="{% static 'media/unnamed.jpg' %}" alt=""></a></li>
+                        <li><a href="{% url 'home' %}" class="logo"><img src="{% static 'media/unnamed.jpg' %}" alt=""></a></li>
             
 
                         <!-- DROPDOWN FOR LOCATION -->
                         <li class="dropdown">
                             <button class="dropdown-btn">📍 Location</button>
                             <div class="dropdown-content">
-                                <a href="#">New York</a>
-                                <a href="#">Los Angeles</a>
-                                <a href="#">Chicago</a>
-                                <a href="#">Houston</a>
+                           <form method="get" action="{% url 'filter_by_location' %}">
+                               <input type="text" name="q" placeholder="Enter location..." id="location-search">
+                          </form>
+
+                                 <div id="location-list">
+                                    {% for l in location %}
+                                  <a href="{% url 'filter_by_location' l.slug|default:'all' %}">{{ l.state }}</a>
+
+
+                                     {% endfor %}
+                                  </div>
                             </div>
                         </li>
                         
                         <li class="search-container">
-                            <input type="search" placeholder="Search products...">
-                            <button class="search-btn">🔍</button>
+                            <form action="{% url 'search' %}" method="GET">
+                                <input type="search" name="search-ad" placeholder="Search for products..." required>
+                                <button type="submit" class="search-btn">🔍</button>
+                            </form>
                         </li>       
                         <!-- DROPDOWN FOR CATEGORIES -->
-                        <li class="dropdown">
+                        <!-- <li class="dropdown">
                             <button class="dropdown-btn">📂 Categories</button>
                             <div class="dropdown-content">
                                 {% for i in categories %}
-                                <a href="#">{{ i }}</a>
+                                <a href="{% url 'filter_category' i.id %}">{{ i.name }}</a>
                                 {% endfor %}
                             </div>
-                        </li>
+                        </li> -->
                         
                         
                         <li><a href="{% url 'post_ad' %}" class="signup-btn">Sell</a></li>
@@ -68,7 +77,8 @@
                     <!-- <h2 class="categories-title">Browse Categories</h2> -->
                     <div class="categories-grid">
                         {% for i in categories %}
-                        <div class="category">
+                       <a href="{% url 'filter_category' i.id %}">
+                         <div class="category">
                             <div class="category-img">
                                 <img src="{{ i.icon.url }}" alt="Electronics">
                             </div>
@@ -77,8 +87,8 @@
                                 <p class="category-description">{{ i.desc }}</p>
                             </div>
                         </div>
+                       </a>
                         {% endfor %}
-                    
                     </div>     
                 </section>
 
@@ -87,7 +97,8 @@
           
                     <div class="products-grid">
                     {% for p in products %}
-                      <a href="{% url 'ad_detail' slug=p.slug %}" class="product-link">
+                      <a href="{% url 'ad_detail' slug=p.slug id=p.id %}" class="product-link">
+
                         <div class="product">
                           {% with p.images.all|first as first_image %}
                             {% if first_image %}

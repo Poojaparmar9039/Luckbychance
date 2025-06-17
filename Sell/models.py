@@ -54,6 +54,7 @@ class Ad(models.Model):
     category = models.ForeignKey(Category, on_delete=models.SET_NULL, null=True)
     subcategory = models.ForeignKey(SubCategory, on_delete=models.SET_NULL, null=True, blank=True)
     location = models.ForeignKey(Location, on_delete=models.SET_NULL, null=True)
+    seller_name = models.CharField(max_length=100,null=True, blank=True)
     contact_phone = models.CharField(max_length=15)
     contact_email = models.EmailField()
     whatsapp_number = models.CharField(max_length=15, blank=True, null=True)

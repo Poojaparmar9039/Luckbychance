@@ -7,20 +7,23 @@ from .models import Location  # make sure Location model is imported
 
 # forms.py
 class AdForm(forms.ModelForm):
-    category = forms.ModelChoiceField(queryset=Category.objects.all(), required=True)
-    location = forms.ModelChoiceField(queryset=Location.objects.all(), required=True)  # Add this line
+    country = forms.CharField(max_length=100, required=True)
+    state = forms.CharField(max_length=100, required=True)
+    city = forms.CharField(max_length=100, required=True)
+    area = forms.CharField(max_length=100, required=False)
 
     class Meta:
         model = Ad
         fields = [
             'title', 'description', 'price', 'is_negotiable',
-            'condition', 'category', 'subcategory', 'location',
+            'condition', 'category', 'subcategory','seller_name',
             'contact_phone', 'contact_email', 'whatsapp_number',
         ]
         widgets = {
             'description': forms.Textarea(attrs={'rows': 4}),
             'is_negotiable': forms.CheckboxInput(),
         }
+
 
     # Rest of the form remains the same...
 

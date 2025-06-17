@@ -76,11 +76,32 @@
         {{ form.condition.errors }}
       </div>
 
-      <div class="form-group">
-        <label for="id_location">Location*</label>
-        {{ form.location }}
-        {{ form.location.errors }}
+  <div class="form-group">
+  <label for="id_country">Country*</label>
+  <select name="country" id="id_country" required></select>
+</div>
+
+<div class="form-group">
+  <label for="id_state">State*</label>
+  <select name="state" id="id_state" required></select>
+</div>
+
+<div class="form-group">
+  <label for="id_city">City*</label>
+  <select name="city" id="id_city" required></select>
+</div>
+
+<div class="form-group">
+  <label for="id_area">Area (Optional)</label>
+  <input type="text" name="area" id="id_area" placeholder="Local Area">
+</div>
+
+       <div class="form-group">
+        <label for="id_title">Seller Name*</label>
+        {{ form.seller_name }}
+        {{ form.seller_name.errors }}
       </div>
+
       
 
 

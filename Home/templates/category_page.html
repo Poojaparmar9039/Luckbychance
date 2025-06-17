@@ -1,0 +1,36 @@
+{% extends 'Home.html' %}
+{% load static %}
+{% block title %} <title>Category</title> {% endblock %}
+{% block content %}
+<link rel="stylesheet" href="{% static 'category_page.css' %}">
+<div class="container">
+    <!-- <h1 class="text-center my-4">Category: {{ category.name }}</h1> -->
+    <div class="row">
+        {% for product in products %}
+            <div class="col-md-4 mb-4">
+                     <a href="{% url 'ad_detail' slug=product.slug id=product.id %}" >
+                <div class="card">
+                     {% with product.images.all|first as first_image %}
+                            {% if first_image %}
+                              <img src="{{ first_image.image.url }}" alt="{{ p.title }}" loading="lazy">
+                            {% else %}
+                              <img src="{% static 'media/default-product.png' %}" alt="No image available">
+                            {% endif %}
+                    {% endwith %}
+                    <div class="card-body">
+                        <h2 class="card-title">{{ product.name }}</h2>
+                        <p class="card-text">{{ product.description|truncatewords:20 }}</p> 
+                        <p class="card-text"> ${{ product.price }}</p>
+                    <button class="btn btn-primary" >   View Details</button>
+                    </div>
+                </div>
+                </a>
+            </div>
+        {% endfor %}
+</div>
+{% endblock %}
+{% block footer %}
+    <!-- <footer class="text-center mt-4">
+        <p>&copy; 2023 MyApp. All rights reserved.</p>
+    </footer> -->
+{% endblock %}

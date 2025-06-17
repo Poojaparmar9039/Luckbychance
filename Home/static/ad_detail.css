@@ -1,41 +1,44 @@
+*{
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
 
 .ad-detail-container {
-  /* background: white; */
-  padding: 2rem 1rem;
+  height: 85vh;
+  padding: 1rem;
   display: flex;
   justify-content: center;
-  align-items: flex-start;
+  align-items: center;
   font-family: 'Arial', sans-serif;
+  overflow: hidden;
 }
 
 .ad-card {
-  /* max-width: 1200px; */
-  width: 80%;
-  /* background: white; */
-  /* border-radius: 20px; */
-  /* border: 1px solid var(--border-light);
-  box-shadow: 0 20px 40px var(--shadow-medium); */
-  overflow: hidden;
-  /* transition: all 0.3s ease;
-  animation: slideUp 0.6s ease-out; */
+  width: 100%;
+  height: 80vh;
   display: flex;
-  gap: 2rem;
+  gap: 1.5rem;
+  overflow: hidden;
+  background: rgba(255, 255, 255, 0.1);
+  /* border-radius: 15px; */
+  backdrop-filter: blur(10px);
+  /* border: 1px solid rgba(255, 255, 255, 0.2);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1); */
 }
 
-
-
-
 .ad-detail-image {
-  flex: 1;
-  min-height: 500px;
+  flex: 0 0 45%;
+  height: 100%;
   overflow: hidden;
   position: relative;
+  /* border-radius: 15px 0 0 15px; */
 }
 
 .ad-detail-image img {
   width: 100%;
   height: 100%;
-  object-fit: cover;
+  object-fit:cover;
   transition: transform 0.3s ease;
 }
 
@@ -43,36 +46,44 @@
   transform: scale(1.05);
 }
 
-.ad-detail-image::after {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: linear-gradient(
-    to bottom,
-    transparent 0%,
-    rgba(4, 42, 31, 0.1) 70%,
-    rgba(4, 42, 31, 0.3) 100%
-  );
-}
 
 .ad-content {
   flex: 1;
   display: flex;
   flex-direction: column;
-  padding: 2rem;
+  padding: 1.5rem;
+  height: 100%;
+  overflow-y: auto;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(255, 255, 255, 0.3) transparent;
+}
+
+.ad-content::-webkit-scrollbar {
+  width: 6px;
+}
+
+.ad-content::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.ad-content::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.3);
+  border-radius: 3px;
+}
+
+.ad-content::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.5);
 }
 
 .ad-detail-header {
   padding-bottom: 1rem;
   border-bottom: 1px solid var(--border-light);
-  margin-bottom: 2rem;
+  margin-bottom: 1.5rem;
+  flex-shrink: 0;
 }
 
 .ad-detail-header h1 {
-  font-size: 2.5rem;
+  font-size: 2rem;
   font-weight: 700;
   margin-bottom: 0.5rem;
   background: var(--text-gradient);
@@ -80,64 +91,155 @@
   -webkit-text-fill-color: transparent;
   background-clip: text;
   text-shadow: 2px 2px 4px var(--shadow-light);
+  line-height: 1.2;
 }
 
 .ad-price {
-  font-size: 1.8rem;
+  font-size: 1.5rem;
   font-weight: 600;
-  color: var(--color-white);
+  /* color: var(--color-white); */
+  color: rgb(236, 49, 49);
   text-shadow: 1px 1px 2px var(--shadow-medium);
   margin: 0;
 }
 
-.ad-detail-description,
-.ad-detail-contact {
-  margin-bottom: 2rem;
-  padding-bottom: 1.5rem;
+.ad-detail-description {
+  margin-bottom: 1.5rem;
+  padding-bottom: 1rem;
   border-bottom: 1px solid var(--border-light);
+  flex-shrink: 0;
 }
 
-.ad-detail-contact {
-  border-bottom: none;
-  margin-bottom: 0;
+.ad-detail-description p {
+  color: var(--color-secondary);
+  line-height: 1.5;
+  font-size: 0.95rem;
+  text-align: justify;
+  margin: 0;
 }
 
-.ad-detail-description h2,
-.ad-detail-contact h2 {
-  font-size: 1.5rem;
+.ad-detail-info {
+  margin-bottom: 1.5rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid var(--border-light);
+  flex-shrink: 0;
+}
+
+.ad-detail-info h2 {
+  font-size: 1.2rem;
   font-weight: 600;
-  margin-bottom: 1rem;
+  margin-bottom: 0.8rem;
   color: var(--color-secondary);
   position: relative;
-  padding-bottom: 0.5rem;
+  padding-bottom: 0.3rem;
 }
 
-.ad-detail-description h2::after,
+.ad-detail-info h2::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 40px;
+  height: 2px;
+  background: var(--btn-gradient);
+  border-radius: 2px;
+}
+
+.ad-detail-info p {
+  color: var(--color-secondary);
+  line-height: 1.4;
+  margin-bottom: 0.5rem;
+  font-size: 0.9rem;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.ad-detail-info p:hover {
+  color: var(--color-primary);
+  transition: color 0.3s ease;
+}
+
+.ad-detail-actions {
+  display: flex;
+  gap: 0.8rem;
+  margin-bottom: 1.5rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid var(--border-light);
+  flex-shrink: 0;
+}
+
+.ad-detail-actions .btn {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 6px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  flex: 1;
+  justify-content: center;
+}
+
+.ad-detail-actions .btn-primary {
+  background: var(--btn-gradient);
+  color: white;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+
+.ad-detail-actions .btn-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+}
+
+.ad-detail-actions .btn-secondary {
+  background: transparent;
+  color: var(--color-secondary);
+  border: 2px solid var(--color-secondary);
+}
+
+.ad-detail-actions .btn-secondary:hover {
+  background: var(--color-secondary);
+  color: white;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+
+.ad-detail-contact {
+  margin-bottom: 0;
+  flex-shrink: 0;
+}
+
+.ad-detail-contact h2 {
+  font-size: 1.2rem;
+  font-weight: 600;
+  margin-bottom: 0.8rem;
+  color: var(--color-secondary);
+  position: relative;
+  padding-bottom: 0.3rem;
+}
+
 .ad-detail-contact h2::after {
   content: '';
   position: absolute;
   bottom: 0;
   left: 0;
-  width: 50px;
-  height: 3px;
+  width: 40px;
+  height: 2px;
   background: var(--btn-gradient);
   border-radius: 2px;
 }
 
-.ad-detail-description p,
 .ad-detail-contact p {
   color: var(--color-secondary);
-  line-height: 1.6;
-  margin-bottom: 0.8rem;
-  font-size: 1rem;
-}
-
-.ad-detail-description p {
-  font-size: 1.1rem;
-  text-align: justify;
-}
-
-.ad-detail-contact p {
+  line-height: 1.4;
+  margin-bottom: 0.5rem;
+  font-size: 0.9rem;
   font-weight: 500;
   display: flex;
   align-items: center;
@@ -152,52 +254,68 @@
 /* Responsive Design */
 @media (max-width: 768px) {
   .ad-detail-container {
-    padding: 1rem 0.5rem;
+    height: 100vh;
+    padding: 0.5rem;
   }
   
   .ad-card {
-    margin: 0;
-    border-radius: 15px;
+    width: 100%;
+    height: 100vh;
+    flex-direction: column;
+    gap: 0;
+    border-radius: 0;
   }
   
   .ad-detail-image {
-    height: 250px;
+    flex: 0 0 35vh;
+    border-radius: 0;
   }
   
-  .ad-detail-header {
-    padding: 1.5rem 1.5rem 1rem;
+  .ad-content {
+    flex: 1;
+    padding: 1rem;
+    height: calc(65vh);
   }
   
   .ad-detail-header h1 {
-    font-size: 2rem;
-  }
-  
-  .ad-price {
     font-size: 1.5rem;
   }
   
-  .ad-detail-description,
-  .ad-detail-contact {
-    padding: 1.5rem;
+  .ad-price {
+    font-size: 1.2rem;
   }
   
-  .ad-detail-description h2,
-  .ad-detail-contact h2 {
-    font-size: 1.3rem;
+  .ad-detail-actions {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+  
+  .ad-detail-actions .btn {
+    width: 100%;
+    padding: 8px 16px;
   }
 }
 
 @media (max-width: 480px) {
-  .ad-detail-header h1 {
-    font-size: 1.8rem;
+  .ad-detail-image {
+    flex: 0 0 30vh;
   }
   
-  .ad-price {
+  .ad-content {
+    height: calc(70vh);
+    padding: 0.8rem;
+  }
+  
+  .ad-detail-header h1 {
     font-size: 1.3rem;
   }
   
-  .ad-detail-description,
-  .ad-detail-contact {
-    padding: 1.2rem;
+  .ad-price {
+    font-size: 1.1rem;
+  }
+  
+  .ad-detail-info h2,
+  .ad-detail-contact h2 {
+    font-size: 1.1rem;
   }
 }

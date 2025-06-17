@@ -144,3 +144,69 @@ document.addEventListener("DOMContentLoaded", function() {
       });
 });
 
+const apiKey = 'T2U3Mmp6dFp6S1p4dXN0T3lESVpJcWpvSkxRZVY2eDZWUHp0cUR1Zg==';
+const countrySelect = document.getElementById('id_country');
+const stateSelect = document.getElementById('id_state');
+const citySelect = document.getElementById('id_city');
+
+function fetchCountries() {
+  fetch('https://api.countrystatecity.in/v1/countries', {
+    headers: { 'X-CSCAPI-KEY': apiKey }
+  })
+    .then(res => res.json())
+    .then(data => {
+      data.forEach(country => {
+        const option = document.createElement('option');
+        option.value = country.name;
+        option.textContent = country.name;
+        option.dataset.iso2 = country.iso2;
+        countrySelect.appendChild(option);
+      });
+    });
+}
+
+function fetchStates(countryIso2) {
+  stateSelect.innerHTML = '<option value="">Select State</option>';
+  fetch(`https://api.countrystatecity.in/v1/countries/${countryIso2}/states`, {
+    headers: { 'X-CSCAPI-KEY': apiKey }
+  })
+    .then(res => res.json())
+    .then(data => {
+      data.forEach(state => {
+        const option = document.createElement('option');
+        option.value = state.name;
+        option.textContent = state.name;
+        option.dataset.iso2 = state.iso2;
+        stateSelect.appendChild(option);
+      });
+    });
+}
+
+function fetchCities(countryIso2, stateIso2) {
+  citySelect.innerHTML = '<option value="">Select City</option>';
+  fetch(`https://api.countrystatecity.in/v1/countries/${countryIso2}/states/${stateIso2}/cities`, {
+    headers: { 'X-CSCAPI-KEY': apiKey }
+  })
+    .then(res => res.json())
+    .then(data => {
+      data.forEach(city => {
+        const option = document.createElement('option');
+        option.value = city.name;
+        option.textContent = city.name;
+        citySelect.appendChild(option);
+      });
+    });
+}
+
+countrySelect.addEventListener('change', () => {
+  const iso2 = countrySelect.selectedOptions[0].dataset.iso2;
+  fetchStates(iso2);
+});
+
+stateSelect.addEventListener('change', () => {
+  const countryIso2 = countrySelect.selectedOptions[0].dataset.iso2;
+  const stateIso2 = stateSelect.selectedOptions[0].dataset.iso2;
+  fetchCities(countryIso2, stateIso2);
+});
+
+document.addEventListener('DOMContentLoaded', fetchCountries);
