@@ -144,7 +144,6 @@ document.addEventListener("DOMContentLoaded", function() {
       });
 });
 
-const apiKey = 'T2U3Mmp6dFp6S1p4dXN0T3lESVpJcWpvSkxRZVY2eDZWUHp0cUR1Zg==';
 const countrySelect = document.getElementById('id_country');
 const stateSelect = document.getElementById('id_state');
 const citySelect = document.getElementById('id_city');
